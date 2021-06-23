@@ -1,4 +1,5 @@
 import 'package:assignment1/services/auth.dart';
+import 'package:assignment1/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -16,6 +17,9 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
+  String error = '';
+  String firstName = '';
+  String lastName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +44,45 @@ class _RegisterState extends State<Register> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 20.0),
-                  TextFormField(onChanged: (val) {
-                    setState(() => email = val);
-                  }),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Email'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                      onChanged: (val) {
+                        setState(() => email = val);
+                      }),
+                  SizedBox(height: 15.0),
+                  TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Password'),
                       obscureText: true,
+                      validator: (val) => val!.length < 6
+                          ? 'Enter a password 6+ chars long'
+                          : null,
                       onChanged: (val) {
                         setState(() => password = val);
                       }),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
+                  TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'First Name'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter your First Name' : null,
+                      onChanged: (val) {
+                        setState(() => firstName = val);
+                      }),
+                  SizedBox(height: 15.0),
+                  TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Last Name'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter your Last Name' : null,
+                      onChanged: (val) {
+                        setState(() => lastName = val);
+                      }),
+                  SizedBox(height: 15.0),
                   ElevatedButton(
                       child: Text(
                         'Register',
@@ -58,10 +90,25 @@ class _RegisterState extends State<Register> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print(email);
-                          print(password);
+                          var dateRegistered = DateTime.now();
+                          dynamic result =
+                              await _auth.registerWithEmailAndPassword(
+                                  email,
+                                  password,
+                                  firstName,
+                                  lastName,
+                                  dateRegistered);
+                          if (result == null) {
+                            setState(
+                                () => error = 'please input a valid email');
+                          }
                         }
-                      })
+                      }),
+                  SizedBox(height: 12.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  )
                 ],
               ))),
     );

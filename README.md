@@ -1,16 +1,22 @@
 # assignment1
 
-A new Flutter project.
+My flutter app for assignment 1. 
 
-## Getting Started
+## How to Run
 
-This project is a starting point for a Flutter application.
+To run, clone the repository and navigate to the root file. Start up your android studio emulator (I used a pixel 4 max running android 30). 
 
-A few resources to get you started if this is your first Flutter project:
+To have it run on that android emulator, run:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+$ flutter run --no-sound-null-safety
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To have it run on Web, run:
+
+$ flutter run -d chrome --no-sound-null-safety
+
+
+## Author
+
+Drew Hartman
+Panther Mail: dhartman5@student.gsu.edu
+Panther ID: 002367708
