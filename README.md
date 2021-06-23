@@ -18,5 +18,7 @@ $ flutter run -d chrome --no-sound-null-safety
 ## Author
 
 Drew Hartman
+
 Panther Mail: dhartman5@student.gsu.edu
+
 Panther ID: 002367708
