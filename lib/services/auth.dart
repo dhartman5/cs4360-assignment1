@@ -1,11 +1,15 @@
 import 'package:assignment1/models/user.dart';
 import 'package:assignment1/services/database.dart';
-// import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   // create user obj based on FirebaseUser
   MyUser? _userFromFirebase(User? user) {
@@ -51,9 +55,24 @@ class AuthService {
   }
 
   // sign in with google
-  // Future<void> useGoogleAuthentication() async {
-  //   final result = await _firebaseAuthenticationService.signInWithGoogle();
-  // }
+  Future signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser!.authentication;
+      final AuthCredential? credential = GoogleAuthProvider.credential(
+        idToken: googleAuth!.idToken,
+        accessToken: googleAuth.accessToken,
+      );
+
+      // Firebase signin
+      final result = await _auth.signInWithCredential(credential!);
+      print('${result.user!.displayName}');
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
 
   // register with email and pass
   Future registerWithEmailAndPassword(String email, String password,

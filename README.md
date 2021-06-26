@@ -12,7 +12,8 @@ $ flutter run --no-sound-null-safety
 
 To have it run on Web, run:
 
-$ flutter run -d chrome --no-sound-null-safety
+$ flutter run -d chrome --web-hostname localhost --web-port=8887 --no-sound-null-safety
+
 
 
 ## Author

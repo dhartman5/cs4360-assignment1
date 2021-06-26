@@ -66,7 +66,8 @@ class _SignInState extends State<SignIn> {
                   ElevatedButton(
                       child: Text(
                         'Sign In',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.0),
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -76,6 +77,20 @@ class _SignInState extends State<SignIn> {
                             setState(() => error = 'INVALID CREDENTIALS');
                           }
                         }
+                      }),
+                  SizedBox(height: 12.0),
+                  Text(
+                    error,
+                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                  ),
+                  ElevatedButton(
+                      child: Text(
+                        'Sign In With Google',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.0),
+                      ),
+                      onPressed: () async {
+                        AuthService().signInWithGoogle();
                       }),
                   SizedBox(height: 12.0),
                   Text(
